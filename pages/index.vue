@@ -4,7 +4,6 @@
     <div class="col-2 p-2 m-5">
       <div class="card shadow p-3 rounded-4">
         <h2 class="text-center">Login</h2>
-        
         <form @submit.prevent="login">
           <div class="mb-3">
             <label>email</label>
@@ -33,7 +32,7 @@ const password = ref('')
 async function login() {
   const { data, error } = await supabase.auth.signInWithPassword({
     email: email.value,
-    password: password.value
+    password: password.value,
   })
   if(data) navigateTo('/siswa')
 }

@@ -29,10 +29,10 @@
                 </div>
             </nuxt-link>
         </div>
+        <NuxtLink to="/">
+        <button type="button" class="btn btn-success">Kembali</button>
+        </NuxtLink>
     </div>
-    <NuxtLink to="/">
-    <button type="button" class="btn btn-success">Kembali</button>
-    </NuxtLink>
 </template>
 <style scoped>
 .card {

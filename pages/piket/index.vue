@@ -1,89 +1,24 @@
 <template>
   <div class="container">
     <div class="row">
-      <div class="col-md-4 ">
+      <div v-for="schedule in schedules" :key="schedule.id" class="col-md-4 ">
         <div class="card my-4">
           <div class="card-header bg-success text-white">
-            <h3>Senin</h3>
+            <h3>{{ schedule.hari }}</h3>
           </div>
           <div class="card-body">
             <ol>
-              <li>Zaskia</li>
-              <li>Irgi</li>
-              <li>Jian</li>
-              <li>Risti</li>
-              <li>Ega</li>
+              <li v-for="student in schedule.Siswa">{{ student.nama }}</li>
             </ol>
           </div>
         </div>
       </div>
-      <div class="col-md-4">
-        <div class="card my-4">
-          <div class="card-header bg-success text-white">
-            <h3>selasa</h3>
-          </div>
-          <div class="card-body">
-            <ol>
-              <li>Ziankha</li>
-              <li>Rafi ahmad</li>
-              <li>Wafi</li>
-              <li>Melani</li>
-              <li>Zulpa</li>
-            </ol>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-4">
-        <div class="card my-4">
-          <div class="card-header bg-success text-white">
-            <h3>Rabu</h3>
-          </div>
-          <div class="card-body">
-            <ol>
-              <li>Sani</li>
-              <li>Rizni</li>
-              <li>Raras</li>
-              <li>Wulan maulina</li>
-              <li>Wulan tri</li>
-            </ol>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-4">
-        <div class="card my-4">
-          <div class="card-header bg-success text-white">
-            <h3>kamis</h3>
-          </div>
-          <div class="card-body">
-            <ol>
-              <li>Erina</li>
-              <li>Riqi</li>
-              <li>Gilang</li>
-              <li>Ardiansyah</li>
-              <li>Ilham</li>
-            </ol>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-4">
-        <div class="card my-4">
-          <div class="card-header bg-success text-white">
-            <h3>jumat</h3>
-          </div>
-          <div class="card-body">
-            <ol>
-              <li>Agistina</li>
-              <li>Agni</li>
-              <li>Resti</li>
-              <li>Husni</li>
-              <li>Tiara</li>
-              <li>Wijdan</li>
-            </ol>
-          </div>
-        </div>
+      <div>
         <NuxtLink to="/siswa/">
-        <button type="button" class="btn btn-success">Kembali</button>
-      </NuxtLink>
+          <div class="vstack gap-2 col-md-5 mx-auto">
+  <button type="button" class="btn btn-success">Kembali</button>
+</div>
+        </NuxtLink>
       </div>
     </div>
   </div>
@@ -91,5 +26,22 @@
 
 <script setup>
 const supabase = useSupabaseClient()
+const schedules = ref([])
+const students = ref([])
 
+async function getSchedules() {
+  const { data, error } = await supabase.from("jadwal_piket").select(`*, Siswa(nama)`).order('id')
+  if (error) throw error
+  if (data) schedules.value = data
+}
+
+async function getSiswa() {
+  const { data, error } = await supabase.from("Siswa").select(`*, jadwal_piket(*)`)
+  if (error) throw error
+  if (data) students.value = data
+}
+
+onMounted(() => {
+  getSchedules()
+})
 </script>

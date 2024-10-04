@@ -53,7 +53,6 @@ const keyword = ref('')
 
 const getpiket = async () => {
 const { data, error } = await supabase.from('Piket').select(`*, tugaspiket(*), email(*)`);
-// ilike('nama', `%${keyword.value}%`)
 if (data) visitors.value = data
 }
 
